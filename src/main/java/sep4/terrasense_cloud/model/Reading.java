@@ -2,6 +2,8 @@ package sep4.terrasense_cloud.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Reading {
     @Id
@@ -10,6 +12,8 @@ public class Reading {
     private double temperature;
     private double moisture;
     private int CO2;
+
+    private LocalDateTime time;
 
     protected Reading(){}
     public Reading(double temperature, double moisture, int CO2) {
