@@ -1,12 +1,13 @@
 package sep4.terrasense_cloud.service.impl;
 
+import org.springframework.stereotype.Service;
 import sep4.terrasense_cloud.database.repository.ReadingsRepository;
 import sep4.terrasense_cloud.model.Reading;
 import sep4.terrasense_cloud.service.services.ReadingsService;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-
+@Service
 public class ReadingsServiceImpl implements ReadingsService {
 
     ReadingsRepository readingsRepository;
@@ -16,7 +17,7 @@ public class ReadingsServiceImpl implements ReadingsService {
         this.readingsRepository=readingsRepository;
     }
 
-    @Override
+
     public Reading getReadingById(Long id) {
         try {
             return readingsRepository.findById(id).get();
