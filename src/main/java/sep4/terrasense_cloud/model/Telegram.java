@@ -17,7 +17,7 @@ public class Telegram {
             int hum = Integer.parseInt(data.substring(0,4), 16);
             double humidity= (double)hum/100;
             int temp = Integer.parseInt(data.substring(4,8), 16);
-            double temperature=(double)temp/100;
+            double temperature=(double)temp/10;
             int co2 = Integer.parseInt(data.substring(8,12), 16);
             return new Reading(temperature,humidity,co2);
         } catch (JSONException e) {
