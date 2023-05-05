@@ -12,6 +12,8 @@ public class Reading {
     private double moisture;
     private int CO2;
 
+    // add min max avg temp
+
     private LocalDateTime time;
 
     protected Reading(){}

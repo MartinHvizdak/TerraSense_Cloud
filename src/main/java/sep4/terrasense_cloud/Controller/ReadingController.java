@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/?")
+@RequestMapping("/reading")
 public class ReadingController {
     private ReadingsServiceImpl readingsService;
     private Reading reading;
@@ -19,12 +19,12 @@ public class ReadingController {
         this.readingsService=readingsService;
     }
 
-    @GetMapping("/reading")
+    @GetMapping("/")
     public ArrayList<Reading> getLastReadings(@RequestParam("quanitites") int quanitity){
         return readingsService.getReadings(quanitity);
     }
 
-    @GetMapping("/reading/{id}")
+    @GetMapping("/{id}")
     public Reading getReadingById(@PathVariable("id") long id){
         return readingsService.getReadingById(id);
     }
