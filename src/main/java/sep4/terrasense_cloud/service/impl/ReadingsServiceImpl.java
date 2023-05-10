@@ -42,7 +42,7 @@ public class ReadingsServiceImpl implements ReadingsService {
 
     @Override
     public Reading addReading(Reading reading) {
-        System.out.println(reading.getCO2()+" "+reading.getTemperature()+" "+reading.getMoisture());
+        System.out.println(reading.getCO2()+" "+reading.getTemperature()+" "+reading.getHumidity());
         return readingsRepository.save(reading);
     }
 }
