@@ -27,8 +27,6 @@ public class ReadingController {
     public ArrayList<Reading> getReadingsByTimestamps(@RequestParam("start") String startDate,
                                                       @RequestParam("end") String endDate)
     {
-        System.out.println(startDate);
-        System.out.println(endDate);
         // The expected format is YYYY-mm-dd
         return readingsService.getReadingsByTimestamps(LocalDate.parse(startDate), LocalDate.parse(endDate));
     }
