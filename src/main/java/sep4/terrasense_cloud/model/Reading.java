@@ -26,6 +26,7 @@ public class Reading {
         this.temperature = temperature;
         this.humidity = humidity;
         this.CO2 = CO2;
+        this.timestamp = LocalDate.now();
     }
 
     public Reading(double temperature, double humidity, int CO2, LocalDate timestamp, Terrarium terrarium) {
