@@ -20,8 +20,8 @@ public class ReadingController {
     }
 
     @GetMapping("/")
-    public ArrayList<Reading> getLastReadings(@RequestParam("quanitites") int quanitity){
-        return readingsService.getReadings(quanitity);
+    public ArrayList<Reading> getLastReadings(@RequestParam("quantity") int quantity){
+        return readingsService.getReadings(quantity);
     }
 
     @GetMapping("/{id}")

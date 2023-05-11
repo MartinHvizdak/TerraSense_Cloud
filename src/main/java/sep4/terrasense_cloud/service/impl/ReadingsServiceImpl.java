@@ -31,7 +31,7 @@ public class ReadingsServiceImpl implements ReadingsService {
 
     @Override
     public ArrayList<Reading> getReadings(int quantity) {
-        ArrayList<Reading> readings=readingsRepository.findAllByOrderByTimeDesc();
+        ArrayList<Reading> readings=readingsRepository.findAllByOrderByTimestampDesc();
         ArrayList<Reading> ret = new ArrayList<>(0);
         for (int i=0;i<quantity;i++)
         {
@@ -42,7 +42,7 @@ public class ReadingsServiceImpl implements ReadingsService {
 
     @Override
     public Reading addReading(Reading reading) {
-        System.out.println(reading.getCO2()+" "+reading.getTemperature()+" "+reading.getMoisture());
+        System.out.println(reading.getCO2()+" "+reading.getTemperature()+" "+reading.getHumidity());
         return readingsRepository.save(reading);
     }
 }
