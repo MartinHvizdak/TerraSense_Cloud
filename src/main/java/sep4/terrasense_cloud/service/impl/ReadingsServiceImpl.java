@@ -31,7 +31,7 @@ public class ReadingsServiceImpl implements ReadingsService {
 
     @Override
     public ArrayList<Reading> getReadings(int quantity) {
-        ArrayList<Reading> readings=readingsRepository.findAllByOrderByTimeDesc();
+        ArrayList<Reading> readings=readingsRepository.findAllByOrderByTimestampDesc();
         ArrayList<Reading> ret = new ArrayList<>(0);
         for (int i=0;i<quantity;i++)
         {
