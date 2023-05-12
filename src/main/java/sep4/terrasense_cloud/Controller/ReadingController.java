@@ -28,9 +28,12 @@ public class ReadingController {
                                                       @RequestParam("end") String endDate)
     {
         // The expected format is YYYY-mm-dd
-        return readingsService.getReadingsByTimestamps(LocalDate.parse(startDate), LocalDate.parse(endDate));
+        try{
+            return readingsService.getReadingsByTimestamps(LocalDate.parse(startDate), LocalDate.parse(endDate));
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
-
 
     @GetMapping("/{id}")
     public Reading getReadingById(@PathVariable("id") long id){
