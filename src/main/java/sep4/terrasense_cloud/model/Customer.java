@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "\"user\"")
-public class User {
+@Table(name = "\"customer\"")
+public class Customer {
 
     @Id
     private String email;
@@ -15,13 +15,13 @@ public class User {
 
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<Terrarium> terrariums;
 
-    public User() {
+    public Customer() {
     }
 
-    public User(String email, String username, String password) {
+    public Customer(String email, String username, String password) {
         this.email = email;
         this.username = username;
         this.password = password;

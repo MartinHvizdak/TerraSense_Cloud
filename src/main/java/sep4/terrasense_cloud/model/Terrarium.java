@@ -2,7 +2,6 @@ package sep4.terrasense_cloud.model;
 
 import jakarta.persistence.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -28,7 +27,7 @@ public class Terrarium {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "email", referencedColumnName = "email")
-    private User user;
+    private Customer customer;
 
     @OneToOne(mappedBy = "terrarium")
     private FeedingSchedule feedingSchedule;
@@ -45,7 +44,7 @@ public class Terrarium {
     public Terrarium() {
     }
 
-    public Terrarium(String name, double minTemperature, double maxTemperature, double minHumidity, double maxHumidity, int minCO2, int maxCO2, User user) {
+    public Terrarium(String name, double minTemperature, double maxTemperature, double minHumidity, double maxHumidity, int minCO2, int maxCO2, Customer customer) {
         this.name = name;
         this.minTemperature = minTemperature;
         this.maxTemperature = maxTemperature;
@@ -53,7 +52,7 @@ public class Terrarium {
         this.maxHumidity = maxHumidity;
         this.minCO2 = minCO2;
         this.maxCO2 = maxCO2;
-        this.user = user;
+        this.customer = customer;
     }
 
     public long getId() {
@@ -120,11 +119,11 @@ public class Terrarium {
         this.maxCO2 = maxCO2;
     }
 
-    public User getUser() {
-        return user;
+    public Customer getUser() {
+        return customer;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Customer customer) {
+        this.customer = customer;
     }
 }
