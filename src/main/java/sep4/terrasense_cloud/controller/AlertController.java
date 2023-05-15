@@ -1,0 +1,10 @@
+package sep4.terrasense_cloud.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/alert")
+public class AlertController {
+
+}
