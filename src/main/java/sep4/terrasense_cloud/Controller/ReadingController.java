@@ -1,4 +1,4 @@
-package sep4.terrasense_cloud.Controller;
+package sep4.terrasense_cloud.controller;
 
 import org.springframework.web.bind.annotation.*;
 import sep4.terrasense_cloud.model.Reading;
