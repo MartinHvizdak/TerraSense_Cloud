@@ -5,9 +5,8 @@ import sep4.terrasense_cloud.database.repository.ReadingsRepository;
 import sep4.terrasense_cloud.model.Reading;
 import sep4.terrasense_cloud.service.services.ReadingsService;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.NoSuchElementException;
 @Service
 public class ReadingsServiceImpl implements ReadingsService {
@@ -49,7 +48,7 @@ public class ReadingsServiceImpl implements ReadingsService {
     }
 
     @Override
-    public ArrayList<Reading> getReadingsByTimestamps(LocalDate start, LocalDate end) {
+    public ArrayList<Reading> getReadingsByTimestamps(LocalDateTime start, LocalDateTime end) {
         ArrayList<Reading> readings = readingsRepository.findAllByOrderByTimestampDesc();
         ArrayList<Reading> returnList = new ArrayList<>();
         for(Reading reading : readings){
