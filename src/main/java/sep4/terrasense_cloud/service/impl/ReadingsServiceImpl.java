@@ -3,6 +3,7 @@ package sep4.terrasense_cloud.service.impl;
 import org.springframework.stereotype.Service;
 import sep4.terrasense_cloud.database.repository.ReadingsRepository;
 import sep4.terrasense_cloud.model.Reading;
+import sep4.terrasense_cloud.service.services.AlertService;
 import sep4.terrasense_cloud.service.services.ReadingsService;
 
 import java.time.LocalDateTime;
@@ -12,10 +13,12 @@ import java.util.NoSuchElementException;
 public class ReadingsServiceImpl implements ReadingsService {
 
     ReadingsRepository readingsRepository;
+    AlertServiceImpl alertService;
 
-    public ReadingsServiceImpl(ReadingsRepository readingsRepository)
+    public ReadingsServiceImpl(ReadingsRepository readingsRepository, AlertServiceImpl alertService)
     {
         this.readingsRepository=readingsRepository;
+        this.alertService=alertService;
     }
 
 
@@ -44,6 +47,7 @@ public class ReadingsServiceImpl implements ReadingsService {
     @Override
     public Reading addReading(Reading reading) {
         System.out.println(reading.getCO2()+" "+reading.getTemperature()+" "+reading.getHumidity());
+        alertService.checkAlertTrigger(reading);
         return readingsRepository.save(reading);
     }
 
