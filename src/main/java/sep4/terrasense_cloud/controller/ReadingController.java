@@ -1,10 +1,11 @@
 package sep4.terrasense_cloud.controller;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import sep4.terrasense_cloud.model.Reading;
 import sep4.terrasense_cloud.service.impl.ReadingsServiceImpl;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @RestController
@@ -24,12 +25,12 @@ public class ReadingController {
 */
     @GetMapping("/")
     @ResponseBody
-    public ArrayList<Reading> getReadingsByTimestamps(@RequestParam("start") String startDate,
-                                                      @RequestParam("end") String endDate)
+    public ArrayList<Reading> getReadingsByTimestamps(@RequestParam("start") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
+                                                      @RequestParam("end") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") LocalDateTime endDate)
     {
-        // The expected format is YYYY-mm-dd
+        // The expected format is yyyy-MM-dd HH:mm:ss
         try{
-            return readingsService.getReadingsByTimestamps(LocalDate.parse(startDate), LocalDate.parse(endDate));
+            return readingsService.getReadingsByTimestamps(startDate, endDate);
         } catch (Exception e) {
             return new ArrayList<>();
         }
