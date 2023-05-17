@@ -1,5 +1,6 @@
 steps:
-  - name: 'gcr.io/cloud-builders/mvn'
+  - name: 'maven:3.8.2-openjdk-17'
+    entrypoint: 'mvn'
     args: [ 'clean', 'package', '-DskipTests' ]
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/terrasense/terrasense:v', '.']
