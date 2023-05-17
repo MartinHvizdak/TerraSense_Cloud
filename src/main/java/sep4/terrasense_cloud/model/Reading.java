@@ -2,7 +2,7 @@ package sep4.terrasense_cloud.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Reading {
@@ -13,7 +13,8 @@ public class Reading {
     private double humidity;
     private int CO2;
 
-    private LocalDate timestamp;
+    @Column(name = "local_date_time", columnDefinition = "TIMESTAMP")
+    private LocalDateTime timestamp;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "terrariumId", referencedColumnName = "id")
@@ -26,10 +27,10 @@ public class Reading {
         this.temperature = temperature;
         this.humidity = humidity;
         this.CO2 = CO2;
-        this.timestamp = LocalDate.now();
+        this.timestamp = LocalDateTime.now();
     }
 
-    public Reading(double temperature, double humidity, int CO2, LocalDate timestamp, Terrarium terrarium) {
+    public Reading(double temperature, double humidity, int CO2, LocalDateTime timestamp, Terrarium terrarium) {
         this.temperature = temperature;
         this.humidity = humidity;
         this.CO2 = CO2;
@@ -69,11 +70,11 @@ public class Reading {
         this.CO2 = CO2;
     }
 
-    public LocalDate getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDate timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
