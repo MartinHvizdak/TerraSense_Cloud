@@ -38,7 +38,7 @@ public class TerrariumController {
         return terrarium;
     }
 
-    @PostMapping("/co2/")
+    @PostMapping("/cotwo/")
     public Terrarium setCO2(@RequestParam("min") int min,
                             @RequestParam("max") int max){
         terrarium = terrariumService.getTerraruimById(1L);
