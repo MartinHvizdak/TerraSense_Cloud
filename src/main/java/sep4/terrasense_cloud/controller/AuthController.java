@@ -17,6 +17,7 @@ import sep4.terrasense_cloud.configuration.JwtTokenUtil;
 import sep4.terrasense_cloud.model.LoginRequest;
 import sep4.terrasense_cloud.model.LoginResponse;
 import sep4.terrasense_cloud.model.RegisterRequest;
+import sep4.terrasense_cloud.service.services.CustomerService;
 
 @RestController
 @RequestMapping("/public")
@@ -26,11 +27,14 @@ public class AuthController {
     private final UserDetailsService userDetailsService;
     private final JwtTokenUtil jwtTokenUtil;
 
+    private final CustomerService customerService;
+
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil) {
+    public AuthController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil, CustomerService customerService) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
+        this.customerService=customerService;
     }
 
     @PostMapping("/login")
@@ -50,11 +54,11 @@ public class AuthController {
     }
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
-      /*  if (userService.existsByUsername(registerRequest.getUsername())) {
+        /*if (customerService.existsByUsername(registerRequest.getUsername())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken");
-        }
+        }*/
 
-        User newUser = new User(registerRequest.getUsername(), registerRequest.getPassword());
+       /* User newUser = new User(registerRequest.getUsername(), registerRequest.getPassword());
         userService.save(newUser);
 */
         Authentication authentication = authenticationManager.authenticate(
