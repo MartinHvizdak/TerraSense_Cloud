@@ -6,4 +6,6 @@ import sep4.terrasense_cloud.model.Customer;
 @Service
 public interface CustomerService {
     public boolean register(Customer customer);
+
+    boolean login(Customer customer);
 }
