@@ -19,4 +19,10 @@ public class CustomerController {
     public boolean register(@RequestBody Customer customer){
         return customerService.register(customer);
     }
+
+    @PostMapping("/login/")
+    @ResponseBody
+    public boolean login(@RequestBody Customer customer){
+        return customerService.login(customer);
+    }
 }

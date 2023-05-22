@@ -39,4 +39,20 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return false;
     }
+
+    @Override
+    public boolean login(Customer customer){
+        try {
+            if (customerRepository.existsById(customer.getEmail())){
+                Customer findCustomer = customerRepository.findById(customer.getEmail()).get();
+                return encoder.verify(findCustomer.getPassword(), customer.getPassword());
+            }
+            else
+                return false;
+
+        }catch (Exception e){
+            System.out.println(e.getStackTrace());
+        }
+        return false;
+    }
 }
