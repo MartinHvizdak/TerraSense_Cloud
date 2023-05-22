@@ -1,9 +1,7 @@
 package sep4.terrasense_cloud.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import sep4.terrasense_cloud.model.LimitsDTO;
 import sep4.terrasense_cloud.model.Terrarium;
 import sep4.terrasense_cloud.service.impl.TerrariumServiceImpl;
 import sep4.terrasense_cloud.service.services.TerrariumService;
@@ -44,6 +42,19 @@ public class TerrariumController {
         terrarium = terrariumService.getTerraruimById(1L);
         terrarium.setMinCO2(min);
         terrarium.setMaxCO2(max);
+        terrariumService.addTerrarium(terrarium);
+        return terrarium;
+    }
+
+    @PostMapping("/limits/")
+    public Terrarium setLimits(@RequestBody()LimitsDTO limits){
+        terrarium = terrariumService.getTerraruimById(1L);
+        terrarium.setMinCO2(limits.getMinCO2());
+        terrarium.setMaxCO2(limits.getMaxCO2());
+        terrarium.setMinHumidity(limits.getMinHumidity());
+        terrarium.setMaxHumidity(limits.getMaxHumidity());
+        terrarium.setMinTemperature(limits.getMinTemperature());
+        terrarium.setMaxTemperature(limits.getMaxTemperature());
         terrariumService.addTerrarium(terrarium);
         return terrarium;
     }
