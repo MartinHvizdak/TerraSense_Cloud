@@ -6,7 +6,7 @@ import sep4.terrasense_cloud.model.Terrarium;
 import sep4.terrasense_cloud.service.impl.TerrariumServiceImpl;
 import sep4.terrasense_cloud.service.services.TerrariumService;
 
-@CrossOrigin
+@CrossOrigin(origins = "https://terrasense-service-dot-terrasense.ew.r.appspot.com", maxAge = 3600)
 @RestController
 @RequestMapping("/terrarium")
 public class TerrariumController {

@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import sep4.terrasense_cloud.model.Customer;
 import sep4.terrasense_cloud.service.services.CustomerService;
 
-@CrossOrigin
+@CrossOrigin(origins = "https://terrasense-service-dot-terrasense.ew.r.appspot.com", maxAge = 3600)
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
