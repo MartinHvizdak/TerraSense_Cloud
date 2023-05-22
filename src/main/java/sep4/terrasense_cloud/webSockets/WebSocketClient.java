@@ -22,6 +22,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.WebSocket;
 import java.nio.ByteBuffer;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.CompletableFuture;
@@ -30,6 +31,7 @@ import java.util.concurrent.CompletableFuture;
 public class WebSocketClient implements WebSocket.Listener {
     private WebSocket server = null;
     private ReadingsService readingsService;
+    private JSONObject feedingSchedule = null;
     @Autowired
     private TerrariumRepository terrariumRepository;
 
@@ -97,6 +99,21 @@ public class WebSocketClient implements WebSocket.Listener {
         try {
             indented = (new JSONObject(data.toString())).toString(4);
             readingsService.addReading(Telegram.getValues(new JSONObject(data.toString())));
+            // Check if the received feeding schedule matches the stored feeding schedule
+            if (feedingSchedule != null) {
+                JSONObject receivedSchedule = new JSONObject(data.toString());
+                if (!feedingSchedule.toString().equals(receivedSchedule.toString())) {
+                    // Feeding schedules don't match, update the feeding schedule
+                    setFeedingSchedule(
+                            LocalDate.parse(feedingSchedule.getString("time")),
+                            feedingSchedule.getInt("amount"),
+                            feedingSchedule.getDouble("frequency"),
+                            terrariumRepository.getReferenceById(feedingSchedule.getLong("terrariumId"))
+                    );
+                    feedingSchedule=null;
+                }
+
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -137,9 +154,21 @@ public class WebSocketClient implements WebSocket.Listener {
 
         if (output) {
             MessageSendingOperations<Object> messagingTemplate = null;
-            messagingTemplate.convertAndSend("/topic/alerts", "New alert triggered!");
+            messagingTemplate.convertAndSend("/home", "New alert triggered!");
         }
+    }
+    // Method to set the feeding schedule
+    public void setFeedingSchedule(LocalDate time, int amount, double frequency, Terrarium terrarium) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("time", time.toString());
+            json.put("amount", amount);
+            json.put("frequency", frequency);
+            json.put("terrariumId", terrarium.getId());
 
-
+            feedingSchedule = json; // Update the feeding schedule variable
+        } catch (JSONException e) {
+            throw new RuntimeException("Error creating JSON message for feeding schedule", e);
+        }
     }
 }
