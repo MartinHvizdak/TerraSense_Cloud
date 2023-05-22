@@ -8,7 +8,6 @@ import sep4.terrasense_cloud.service.impl.ReadingsServiceImpl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-@CrossOrigin(origins = "https://terrasense-service-dot-terrasense.ew.r.appspot.com", maxAge = 3600)
 @RestController
 @RequestMapping("/reading")
 public class ReadingController {
