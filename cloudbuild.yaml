@@ -3,11 +3,11 @@ steps:
     entrypoint: 'mvn'
     args: [ 'clean', 'package', '-DskipTests' ]
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/terrasense/terrasense:v1.4', '.']
+    args: ['build', '-t', 'gcr.io/terrasense/terrasense:v1.5', '.']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/terrasense/terrasense:v1.4']
+    args: ['push', 'gcr.io/terrasense/terrasense:v1.5']
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy', '--image-url=gcr.io/terrasense/terrasense:v', '--version', 'v1-4']
+    args: ['app', 'deploy', '--image-url=gcr.io/terrasense/terrasense:v', '--version', 'v1-5']
 options:
   logging: CLOUD_LOGGING_ONLY
 # append version number to the v, in app deploy use - instead of . (v1.1 = v1-1)
