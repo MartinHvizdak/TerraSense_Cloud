@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import sep4.terrasense_cloud.model.Customer;
 import sep4.terrasense_cloud.service.services.CustomerService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {

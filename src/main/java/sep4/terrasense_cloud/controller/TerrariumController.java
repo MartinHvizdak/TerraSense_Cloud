@@ -6,6 +6,7 @@ import sep4.terrasense_cloud.model.Terrarium;
 import sep4.terrasense_cloud.service.impl.TerrariumServiceImpl;
 import sep4.terrasense_cloud.service.services.TerrariumService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/terrarium")
 public class TerrariumController {

@@ -1,9 +1,11 @@
 package sep4.terrasense_cloud.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sep4.terrasense_cloud.service.services.FeedingScheduleService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/feedingSchedule")
 public class FeedingScheduleController {
