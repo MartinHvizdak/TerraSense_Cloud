@@ -1,7 +1,7 @@
 package sep4.terrasense_cloud.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import sep4.terrasense_cloud.model.Customer;
 import sep4.terrasense_cloud.service.services.CustomerService;
 
 @RestController
@@ -12,5 +12,17 @@ public class CustomerController {
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
+    }
+
+    @PostMapping("/register/")
+    @ResponseBody
+    public boolean register(@RequestBody Customer customer){
+        return customerService.register(customer);
+    }
+
+    @PostMapping("/login/")
+    @ResponseBody
+    public boolean login(@RequestBody Customer customer){
+        return customerService.login(customer);
     }
 }
