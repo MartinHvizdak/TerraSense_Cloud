@@ -15,7 +15,7 @@ import sep4.terrasense_cloud.model.RegisterRequest;
 import sep4.terrasense_cloud.service.services.CustomerService;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/public")
 public class CustomerController {
 
     private CustomerService customerService;
@@ -42,7 +42,7 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken");
         }
 
-        Customer newUser = new Customer(registerRequest.getUsername(), registerRequest.getPassword());
+        Customer newUser = new Customer(registerRequest.getUsername(),"email", registerRequest.getPassword());
         customerService.register(newUser);
 
         try {
