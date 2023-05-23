@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<Customer> customer1 = customerRepository.findByUsername(customer.getUsername());
         if (customer1.isPresent()) {
             Customer user = customer1.get();
-            if (encoder.verify(findCustomer.getPassword(), customer.getPassword())) {
+            if (encoder.verify(user.getPassword(), customer.getPassword())) {
                 return user;
             } else {
                 throw new BadCredentialsException("Invalid username or password.");
