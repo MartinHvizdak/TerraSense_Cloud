@@ -3,6 +3,7 @@ package sep4.terrasense_cloud.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Alert {
@@ -13,7 +14,7 @@ public class Alert {
 
     private String type;
 
-    private LocalDate timestamp;
+    private LocalDateTime timestamp;
 
     private String value;
 
@@ -26,7 +27,7 @@ public class Alert {
     public Alert() {
     }
 
-    public Alert(String type, LocalDate timestamp, String value, String severity, Terrarium terrarium) {
+    public Alert(String type, LocalDateTime timestamp, String value, String severity, Terrarium terrarium) {
         this.type = type;
         this.timestamp = timestamp;
         this.value = value;
@@ -50,11 +51,11 @@ public class Alert {
         this.type = type;
     }
 
-    public LocalDate getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDate timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 

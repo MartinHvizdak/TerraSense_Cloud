@@ -15,7 +15,7 @@ import sep4.terrasense_cloud.model.RegisterRequest;
 import sep4.terrasense_cloud.service.services.CustomerService;
 
 @RestController
-@RequestMapping("/public")
+@RequestMapping("/customer")
 public class CustomerController {
 
     private CustomerService customerService;
