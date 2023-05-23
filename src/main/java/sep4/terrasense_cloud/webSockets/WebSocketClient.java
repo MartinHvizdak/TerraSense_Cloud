@@ -32,6 +32,7 @@ public class WebSocketClient implements WebSocket.Listener {
     private WebSocket server = null;
     private ReadingsService readingsService;
     private JSONObject feedingSchedule = null;
+    private JSONObject limits = null;
     @Autowired
     private TerrariumRepository terrariumRepository;
 
@@ -114,6 +115,24 @@ public class WebSocketClient implements WebSocket.Listener {
                 }
 
             }
+            if (limits != null) {
+                JSONObject receivedLimits = new JSONObject(data.toString());
+                if (!limits.toString().equals(receivedLimits.toString())) {
+                    // Feeding schedules don't match, update the feeding schedule
+                    setLimit(
+                            limits.getInt("minCO2"),
+                            limits.getInt("maxCO2"),
+                            limits.getDouble("minHumidity"),
+                            limits.getDouble("maxHumidity"),
+                            limits.getDouble("minTemperature"),
+                            limits.getDouble("maxTemperature"));
+
+                }
+                System.out.println(indented);
+
+                webSocket.request(1);
+                return CompletableFuture.completedFuture("onText() completed.").thenAccept(System.out::println);
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -169,6 +188,23 @@ public class WebSocketClient implements WebSocket.Listener {
             feedingSchedule = json; // Update the feeding schedule variable
         } catch (JSONException e) {
             throw new RuntimeException("Error creating JSON message for feeding schedule", e);
+        }
+    }
+
+    public void setLimit(int minCO2, int maxCO2, double minHumidity, double maxHumidity, double minTemperature, double maxTemperature)
+    {
+        JSONObject json= new JSONObject();
+        try {
+            json.put("CO2 bottom limit", minCO2);
+            json.put("CO2 top limit", maxCO2);
+            json.put("Humidity bottom limit", minHumidity);
+            json.put("Humidity top limit", maxHumidity);
+            json.put("Temperature bottom limit", minTemperature);
+            json.put("Temperature top limit", maxTemperature);
+
+            limits=json;
+        } catch (JSONException e) {
+            throw new RuntimeException("Error creating JSON message for limits", e);
         }
     }
 }
