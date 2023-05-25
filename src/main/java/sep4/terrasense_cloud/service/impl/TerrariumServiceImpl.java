@@ -53,7 +53,7 @@ public class TerrariumServiceImpl implements TerrariumService {
             return terrariumDTOS;
         } catch (Exception e) {
             throw new RuntimeException(e);
-          
+        } }
     @Override
     public Terrarium createTerrarium(Terrarium terrarium, String email){
         try {

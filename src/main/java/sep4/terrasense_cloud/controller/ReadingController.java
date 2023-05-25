@@ -3,6 +3,7 @@ package sep4.terrasense_cloud.controller;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import sep4.terrasense_cloud.model.Reading;
+import sep4.terrasense_cloud.model.ReadingDTO;
 import sep4.terrasense_cloud.service.impl.ReadingsServiceImpl;
 
 import java.time.LocalDateTime;
@@ -25,8 +26,8 @@ public class ReadingController {
 */
     @GetMapping("/")
     @ResponseBody
-    public ArrayList<Reading> getReadingsByTimestamps(@RequestParam("start") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
-                                                      @RequestParam("end") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") LocalDateTime endDate)
+    public ArrayList<ReadingDTO> getReadingsByTimestamps(@RequestParam("start") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
+                                                         @RequestParam("end") @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") LocalDateTime endDate)
     {
         // The expected format is yyyy-MM-dd HH:mm:ss
         try{
@@ -37,7 +38,7 @@ public class ReadingController {
     }
 
     @GetMapping("/{id}")
-    public Reading getReadingById(@PathVariable("id") long id){
+    public ReadingDTO getReadingById(@PathVariable("id") long id){
         return readingsService.getReadingById(id);
     }
 }
