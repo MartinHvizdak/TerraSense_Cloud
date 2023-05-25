@@ -3,8 +3,11 @@ package sep4.terrasense_cloud.controller;
 import org.springframework.web.bind.annotation.*;
 import sep4.terrasense_cloud.model.LimitsDTO;
 import sep4.terrasense_cloud.model.Terrarium;
+import sep4.terrasense_cloud.model.TerrariumDTO;
 import sep4.terrasense_cloud.service.impl.TerrariumServiceImpl;
 import sep4.terrasense_cloud.service.services.TerrariumService;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/terrarium")
@@ -59,6 +62,10 @@ public class TerrariumController {
         return terrarium;
     }
 
+    @GetMapping("/all/")
+    public ArrayList<TerrariumDTO> getTerrariumsByUser(@RequestParam("email")String email){
+        return terrariumService.getTerrariumsByEmail(email);
+
     @PostMapping("/create/")
     public Terrarium createTerrarium(@RequestBody Terrarium terrarium, @RequestParam("email") String email){
         return terrariumService.createTerrarium(terrarium, email);
@@ -72,5 +79,6 @@ public class TerrariumController {
     @DeleteMapping("/delete/")
     public void deleteTerrarium(@RequestParam("email") String email, @RequestParam("terrariumId") Long terrariumId ){
         terrariumService.deleteTerrarium(email, terrariumId);
+
     }
 }

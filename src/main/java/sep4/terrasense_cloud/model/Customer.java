@@ -62,6 +62,9 @@ public class Customer implements UserDetails {
         this.password = password;
     }
 
+    public Set<Terrarium> getTerrariums() {
+        return terrariums;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

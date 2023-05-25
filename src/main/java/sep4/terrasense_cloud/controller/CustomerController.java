@@ -50,6 +50,7 @@ public class CustomerController {
             System.out.println("3");
             return ResponseEntity.ok(new LoginResponse(token));
         } catch (AuthenticationException e) {
+            System.out.println(e.getStackTrace());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
