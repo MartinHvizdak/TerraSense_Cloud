@@ -126,4 +126,36 @@ public class Terrarium {
     public void setUser(Customer customer) {
         this.customer = customer;
     }
+
+    public FeedingSchedule getFeedingSchedule() {
+        return feedingSchedule;
+    }
+
+    public void setFeedingSchedule(FeedingSchedule feedingSchedule) {
+        this.feedingSchedule = feedingSchedule;
+    }
+
+    public Set<Animal> getAnimals() {
+        return animals;
+    }
+
+    public void setAnimals(Set<Animal> animals) {
+        this.animals = animals;
+    }
+
+    public Set<Alert> getAlerts() {
+        return alerts;
+    }
+
+    public void setAlerts(Set<Alert> alerts) {
+        this.alerts = alerts;
+    }
+
+    public Set<Reading> getReadings() {
+        return readings;
+    }
+
+    public void setReadings(Set<Reading> readings) {
+        this.readings = readings;
+    }
 }
