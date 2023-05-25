@@ -58,4 +58,19 @@ public class TerrariumController {
         terrariumService.addTerrarium(terrarium);
         return terrarium;
     }
+
+    @PostMapping("/create/")
+    public Terrarium createTerrarium(@RequestBody Terrarium terrarium, @RequestParam("email") String email){
+        return terrariumService.createTerrarium(terrarium, email);
+    }
+
+    @PutMapping("/alter/")
+    public void alterTerrarium(@RequestBody Terrarium terrarium, @RequestParam("email") String email){
+        terrariumService.alterTerrarium(email,terrarium);
+    }
+
+    @DeleteMapping("/delete/")
+    public void deleteTerrarium(@RequestParam("email") String email, @RequestParam("terrariumId") Long terrariumId ){
+        terrariumService.deleteTerrarium(email, terrariumId);
+    }
 }
