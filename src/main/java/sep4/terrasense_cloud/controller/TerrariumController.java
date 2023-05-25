@@ -65,5 +65,20 @@ public class TerrariumController {
     @GetMapping("/all/")
     public ArrayList<TerrariumDTO> getTerrariumsByUser(@RequestParam("email")String email){
         return terrariumService.getTerrariumsByEmail(email);
+
+    @PostMapping("/create/")
+    public Terrarium createTerrarium(@RequestBody Terrarium terrarium, @RequestParam("email") String email){
+        return terrariumService.createTerrarium(terrarium, email);
+    }
+
+    @PutMapping("/alter/")
+    public void alterTerrarium(@RequestBody Terrarium terrarium, @RequestParam("email") String email){
+        terrariumService.alterTerrarium(email,terrarium);
+    }
+
+    @DeleteMapping("/delete/")
+    public void deleteTerrarium(@RequestParam("email") String email, @RequestParam("terrariumId") Long terrariumId ){
+        terrariumService.deleteTerrarium(email, terrariumId);
+
     }
 }
