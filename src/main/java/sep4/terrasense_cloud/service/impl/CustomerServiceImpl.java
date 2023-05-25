@@ -53,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
 
                 customer.setPassword(encoder.hash(iterations, memory, parallelism, customer.getPassword()));
                 customerRepository.save(customer);
-        } catch (Exception e) {
+       } catch (Exception e) {
             System.out.println(e.getStackTrace());
             throw new BadCredentialsException("Registration unsuccesfull");
         }

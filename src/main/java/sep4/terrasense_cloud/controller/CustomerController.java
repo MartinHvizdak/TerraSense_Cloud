@@ -42,7 +42,7 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken");
         }
 
-        Customer newUser = new Customer(registerRequest.getUsername(), registerRequest.getPassword());
+        Customer newUser = new Customer(registerRequest.getEmail(),registerRequest.getUsername(), registerRequest.getPassword());
         customerService.register(newUser);
 
         try {

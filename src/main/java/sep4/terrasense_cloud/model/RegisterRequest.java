@@ -4,13 +4,15 @@ public class RegisterRequest {
     private String username;
     private String password;
 
+    private String email;
     // Default constructor (required for JSON deserialization)
     public RegisterRequest() {
     }
 
-    public RegisterRequest(String username, String password) {
+    public RegisterRequest(String username, String password, String email) {
         this.username = username;
         this.password = password;
+        this.email=email;
     }
 
     public String getUsername() {
@@ -27,5 +29,9 @@ public class RegisterRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }
