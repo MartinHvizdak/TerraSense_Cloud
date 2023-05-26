@@ -1,18 +1,17 @@
 package sep4.terrasense_cloud.service.impl;
 
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sep4.terrasense_cloud.database.repository.CustomerRepository;
 import sep4.terrasense_cloud.database.repository.TerrariumRepository;
 import sep4.terrasense_cloud.model.Customer;
-import sep4.terrasense_cloud.model.LimitsDTO;
 import sep4.terrasense_cloud.model.Terrarium;
 import sep4.terrasense_cloud.model.TerrariumDTO;
 import sep4.terrasense_cloud.service.services.TerrariumService;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -32,7 +31,7 @@ public class TerrariumServiceImpl implements TerrariumService {
     }
 
     @Override
-    public Terrarium getTerraruimById(Long id) {
+    public Terrarium getTerrariumById(Long id) {
         try{
             return terrariumRepository.findById(id).get();
         }catch (NoSuchElementException e){
@@ -43,22 +42,28 @@ public class TerrariumServiceImpl implements TerrariumService {
 
     @Override
     public ArrayList<TerrariumDTO> getTerrariumsByEmail(String email) {
+        ArrayList<TerrariumDTO> terrariumDTOS = new ArrayList<>();
         try{
-            ArrayList<TerrariumDTO> terrariumDTOS = new ArrayList<>();
             Customer customer = customerRepository.getReferenceById(email);
+            System.out.println(customer);
             Set<Terrarium> terrariums = customer.getTerrariums();
-            terrariums.forEach((e) -> terrariumDTOS.add(new TerrariumDTO(e.getId(), e.getName(), e.getMinTemperature(),
-                    e.getMaxTemperature(), e.getMinHumidity(), e.getMaxHumidity(), e.getMinCO2(), e.getMaxCO2(),
-                    e.getFeedingSchedule(), e.getAnimals(), e.getAlerts(), e.getReadings())));
+            System.out.println(terrariums.size());
+            for(Terrarium terrarium : terrariums){
+                terrariumDTOS.add(new TerrariumDTO(terrarium));
+            }
             return terrariumDTOS;
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } }
+            System.out.println(e.getStackTrace());
+            return terrariumDTOS;
+        }
+    }
+
     @Override
-    public Terrarium createTerrarium(Terrarium terrarium, String email){
+    public TerrariumDTO createTerrarium(TerrariumDTO terrarium, String email){
         try {
             Customer customer = customerRepository.findById(email).get();
-            Terrarium findTerrarium  = terrariumRepository.findById(1L).get();
+            Terrarium findTerrarium  = new Terrarium();
+            findTerrarium.setName(terrarium.getName());
             findTerrarium.setMinCO2(terrarium.getMinCO2());
             findTerrarium.setMaxCO2(terrarium.getMaxCO2());
             findTerrarium.setMinHumidity(terrarium.getMinHumidity());
@@ -67,20 +72,20 @@ public class TerrariumServiceImpl implements TerrariumService {
             findTerrarium.setMaxTemperature(terrarium.getMaxTemperature());
             findTerrarium.setUser(customer);
             terrariumRepository.save(findTerrarium);
-            return findTerrarium;
+            return new TerrariumDTO(findTerrarium);
         }catch (Exception e){
             System.out.println(e.getStackTrace());
-            return new Terrarium();
+            return new TerrariumDTO(new Terrarium());
         }
     }
 
     @Transactional
     @Override
-    public void alterTerrarium(String email, Terrarium terrarium){
+    public void alterTerrarium(String email, TerrariumDTO terrarium){
         try {
             Customer customer = customerRepository.findById(email).get();
 
-            Terrarium findTerrarium = terrariumRepository.getTerrariumByCustomerAndId(customer, 1L);
+            Terrarium findTerrarium = terrariumRepository.getTerrariumByCustomerAndId(customer, terrarium.getId());
 
             findTerrarium.setName(terrarium.getName());
             findTerrarium.setMinCO2(terrarium.getMinCO2());
@@ -95,6 +100,7 @@ public class TerrariumServiceImpl implements TerrariumService {
             findTerrarium.getMaxHumidity(), findTerrarium.getMinCO2(), findTerrarium.getMaxCO2());
         }catch (Exception e){
             System.out.println(e.getStackTrace());
+            throw new NoSuchElementException("Terrarium doesn't exist");
         }
     }
 
@@ -109,6 +115,7 @@ public class TerrariumServiceImpl implements TerrariumService {
             terrariumRepository.deleteTerrarium(findTerrarium.getId());
         }catch (Exception e){
             System.out.println(e.getStackTrace());
+            throw new NoSuchElementException("Terrarium doesn't exist");
         }
     }
 }

@@ -15,12 +15,8 @@ public class TerrariumDTO {
     private double maxHumidity;
     private int minCO2;
     private int maxCO2;
-    private FeedingSchedule feedingSchedule;
-    private Set<Animal> animals;
-    private Set<Alert> alerts;
-    private Set<Reading> readings;
 
-    public TerrariumDTO(long id, String name, double minTemperature, double maxTemperature, double minHumidity, double maxHumidity, int minCO2, int maxCO2, FeedingSchedule feedingSchedule, Set<Animal> animals, Set<Alert> alerts, Set<Reading> readings) {
+    public TerrariumDTO(long id, String name, double minTemperature, double maxTemperature, double minHumidity, double maxHumidity, int minCO2, int maxCO2) {
         this.id = id;
         this.name = name;
         this.minTemperature = minTemperature;
@@ -29,9 +25,48 @@ public class TerrariumDTO {
         this.maxHumidity = maxHumidity;
         this.minCO2 = minCO2;
         this.maxCO2 = maxCO2;
-        this.feedingSchedule = feedingSchedule;
-        this.animals = animals;
-        this.alerts = alerts;
-        this.readings = readings;
+    }
+
+    public TerrariumDTO(Terrarium terrarium){
+        this.id = terrarium.getId();
+        this.name = terrarium.getName();
+        this.minTemperature = terrarium.getMinTemperature();
+        this.maxTemperature = terrarium.getMaxTemperature();
+        this.minHumidity = terrarium.getMinHumidity();
+        this.maxHumidity = terrarium.getMaxHumidity();
+        this.minCO2 = terrarium.getMinCO2();
+        this.maxCO2 = terrarium.getMaxCO2();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getMinTemperature() {
+        return minTemperature;
+    }
+
+    public double getMaxTemperature() {
+        return maxTemperature;
+    }
+
+    public double getMinHumidity() {
+        return minHumidity;
+    }
+
+    public double getMaxHumidity() {
+        return maxHumidity;
+    }
+
+    public int getMinCO2() {
+        return minCO2;
+    }
+
+    public int getMaxCO2() {
+        return maxCO2;
     }
 }
