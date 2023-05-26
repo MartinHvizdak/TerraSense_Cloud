@@ -57,7 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customerRepository.save(customer);
        } catch (Exception e) {
             System.out.println(e.getStackTrace());
-            throw new BadCredentialsException("Registration unsuccesfull");
+            throw new BadCredentialsException("Registration unsuccessful");
         }
     }
 }

@@ -20,39 +20,39 @@ public class TerrariumController {
         this.terrariumService = terrariumService;
     }
 
-    @PostMapping("/temperature/")
+    @PostMapping("/temperature")
     public Terrarium setTemperature(@RequestParam("min") double min,
                                     @RequestParam("max") double max){
-        terrarium = terrariumService.getTerraruimById(1L);
+        terrarium = terrariumService.getTerrariumById(1L);
         terrarium.setMinTemperature(min);
         terrarium.setMaxTemperature(max);
         terrariumService.addTerrarium(terrarium);
         return terrarium;
     }
 
-    @PostMapping("/humidity/")
+    @PostMapping("/humidity")
     public Terrarium setHumidity(@RequestParam("min") double min,
                                  @RequestParam("max") double max){
-        terrarium = terrariumService.getTerraruimById(1L);
+        terrarium = terrariumService.getTerrariumById(1L);
         terrarium.setMinHumidity(min);
         terrarium.setMaxHumidity(max);
         terrariumService.addTerrarium(terrarium);
         return terrarium;
     }
 
-    @PostMapping("/cotwo/")
+    @PostMapping("/cotwo")
     public Terrarium setCO2(@RequestParam("min") int min,
                             @RequestParam("max") int max){
-        terrarium = terrariumService.getTerraruimById(1L);
+        terrarium = terrariumService.getTerrariumById(1L);
         terrarium.setMinCO2(min);
         terrarium.setMaxCO2(max);
         terrariumService.addTerrarium(terrarium);
         return terrarium;
     }
 
-    @PostMapping("/limits/")
+    @PostMapping("/limits")
     public Terrarium setLimits(@RequestBody()LimitsDTO limits){
-        terrarium = terrariumService.getTerraruimById(1L);
+        terrarium = terrariumService.getTerrariumById(1L);
         terrarium.setMinCO2(limits.getMinCO2());
         terrarium.setMaxCO2(limits.getMaxCO2());
         terrarium.setMinHumidity(limits.getMinHumidity());
@@ -63,28 +63,28 @@ public class TerrariumController {
         return terrarium;
     }
 
-    @GetMapping("/all/")
+    @GetMapping("/all")
     public ArrayList<TerrariumDTO> getTerrariumsByUser(@RequestHeader("Authorization")String authorizationHeader) {
             String token = authorizationHeader.replace("Bearer ", "");
             String email = JwtTokenUtil.getEmailFromToken(token);
             return terrariumService.getTerrariumsByEmail(email);
     }
 
-    @PostMapping("/create/")
+    @PostMapping("/create")
     public TerrariumDTO createTerrarium(@RequestBody TerrariumDTO terrarium, @RequestHeader("Authorization")String authorizationHeader){
         String token = authorizationHeader.replace("Bearer ", "");
         String email = JwtTokenUtil.getEmailFromToken(token);
         return terrariumService.createTerrarium(terrarium, email);
     }
 
-    @PutMapping("/alter/")
+    @PostMapping("/alter")
     public void alterTerrarium(@RequestBody TerrariumDTO terrarium, @RequestHeader("Authorization")String authorizationHeader){
         String token = authorizationHeader.replace("Bearer ", "");
         String email = JwtTokenUtil.getEmailFromToken(token);
         terrariumService.alterTerrarium(email,terrarium);
     }
 
-    @DeleteMapping("/delete/")
+    @DeleteMapping("/delete")
     public void deleteTerrarium(@RequestHeader("Authorization")String authorizationHeader, @RequestParam("terrariumId") Long terrariumId ){
         String token = authorizationHeader.replace("Bearer ", "");
         String email = JwtTokenUtil.getEmailFromToken(token);

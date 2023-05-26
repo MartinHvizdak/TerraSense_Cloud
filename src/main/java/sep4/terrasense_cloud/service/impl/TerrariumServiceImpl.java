@@ -31,7 +31,7 @@ public class TerrariumServiceImpl implements TerrariumService {
     }
 
     @Override
-    public Terrarium getTerraruimById(Long id) {
+    public Terrarium getTerrariumById(Long id) {
         try{
             return terrariumRepository.findById(id).get();
         }catch (NoSuchElementException e){
@@ -62,7 +62,8 @@ public class TerrariumServiceImpl implements TerrariumService {
     public TerrariumDTO createTerrarium(TerrariumDTO terrarium, String email){
         try {
             Customer customer = customerRepository.findById(email).get();
-            Terrarium findTerrarium  = terrariumRepository.findById(1L).get();
+            Terrarium findTerrarium  = new Terrarium();
+            findTerrarium.setName(terrarium.getName());
             findTerrarium.setMinCO2(terrarium.getMinCO2());
             findTerrarium.setMaxCO2(terrarium.getMaxCO2());
             findTerrarium.setMinHumidity(terrarium.getMinHumidity());
@@ -84,7 +85,7 @@ public class TerrariumServiceImpl implements TerrariumService {
         try {
             Customer customer = customerRepository.findById(email).get();
 
-            Terrarium findTerrarium = terrariumRepository.getTerrariumByCustomerAndId(customer, 1L);
+            Terrarium findTerrarium = terrariumRepository.getTerrariumByCustomerAndId(customer, terrarium.getId());
 
             findTerrarium.setName(terrarium.getName());
             findTerrarium.setMinCO2(terrarium.getMinCO2());
@@ -99,6 +100,7 @@ public class TerrariumServiceImpl implements TerrariumService {
             findTerrarium.getMaxHumidity(), findTerrarium.getMinCO2(), findTerrarium.getMaxCO2());
         }catch (Exception e){
             System.out.println(e.getStackTrace());
+            throw new NoSuchElementException("Terrarium doesn't exist");
         }
     }
 
@@ -113,6 +115,7 @@ public class TerrariumServiceImpl implements TerrariumService {
             terrariumRepository.deleteTerrarium(findTerrarium.getId());
         }catch (Exception e){
             System.out.println(e.getStackTrace());
+            throw new NoSuchElementException("Terrarium doesn't exist");
         }
     }
 }
