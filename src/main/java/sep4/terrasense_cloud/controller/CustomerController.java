@@ -38,8 +38,8 @@ public class CustomerController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
-        if (customerService.existsByUsername(registerRequest.getUsername())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken");
+        if (customerService.existsByEmail(registerRequest.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already taken");
         }
 
         Customer newUser = new Customer(registerRequest.getEmail(),registerRequest.getUsername(), registerRequest.getPassword());
