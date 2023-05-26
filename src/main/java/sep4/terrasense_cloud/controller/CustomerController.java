@@ -28,7 +28,7 @@ public class CustomerController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
             Customer customer=customerService.login(loginRequest);
-            String token = JwtTokenUtil.generateToken(customer.getUsername());
+            String token = JwtTokenUtil.generateToken(customer.getEmail());
 
             return ResponseEntity.ok(new LoginResponse(token));
         } catch (AuthenticationException e) {
@@ -38,15 +38,15 @@ public class CustomerController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
-        if (customerService.existsByUsername(registerRequest.getUsername())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username is already taken");
+        if (customerService.existsByEmail(registerRequest.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email is already taken");
         }
 
         Customer newUser = new Customer(registerRequest.getEmail(),registerRequest.getUsername(), registerRequest.getPassword());
         customerService.register(newUser);
 
         try {
-            String token = JwtTokenUtil.generateToken(newUser.getUsername());
+            String token = JwtTokenUtil.generateToken(newUser.getEmail());
             System.out.println("3");
             return ResponseEntity.ok(new LoginResponse(token));
         } catch (AuthenticationException e) {

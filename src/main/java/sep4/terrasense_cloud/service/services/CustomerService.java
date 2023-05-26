@@ -9,4 +9,5 @@ public interface CustomerService {
     public boolean existsByUsername(String username);
     public void register(Customer customer);
     public Customer login(LoginRequest customer);
+    boolean existsByEmail(String email);
 }

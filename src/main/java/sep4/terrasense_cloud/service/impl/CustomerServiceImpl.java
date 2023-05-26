@@ -1,15 +1,12 @@
 package sep4.terrasense_cloud.service.impl;
 
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.AuthenticationException;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.stereotype.Service;
 import sep4.terrasense_cloud.database.repository.CustomerRepository;
 import sep4.terrasense_cloud.model.Customer;
 import sep4.terrasense_cloud.model.LoginRequest;
-import sep4.terrasense_cloud.model.Customer;
-import sep4.terrasense_cloud.security.PasswordEncoder;
 import sep4.terrasense_cloud.service.services.CustomerService;
 
 import java.util.Optional;
@@ -32,9 +29,14 @@ public class CustomerServiceImpl implements CustomerService {
         return user.isPresent();
     }
 
+    public boolean existsByEmail(String email){
+        Optional<Customer> user = customerRepository.findById(email);
+        return user.isPresent();
+    }
+
     public Customer login(LoginRequest customer) {
 
-        Optional<Customer> customer1 = customerRepository.findByUsername(customer.getUsername());
+        Optional<Customer> customer1 = customerRepository.findById(customer.getEmail());
         if (customer1.isPresent()) {
             Customer user = customer1.get();
             if (encoder.verify(user.getPassword(), customer.getPassword())) {
@@ -55,7 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customerRepository.save(customer);
        } catch (Exception e) {
             System.out.println(e.getStackTrace());
-            throw new BadCredentialsException("Registration unsuccesfull");
+            throw new BadCredentialsException("Registration unsuccessful");
         }
     }
 }
