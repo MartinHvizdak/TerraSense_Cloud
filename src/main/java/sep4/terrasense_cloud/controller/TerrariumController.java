@@ -1,6 +1,7 @@
 package sep4.terrasense_cloud.controller;
 
 import org.springframework.web.bind.annotation.*;
+import sep4.terrasense_cloud.jwt.JwtTokenUtil;
 import sep4.terrasense_cloud.model.LimitsDTO;
 import sep4.terrasense_cloud.model.Terrarium;
 import sep4.terrasense_cloud.model.TerrariumDTO;
@@ -63,23 +64,30 @@ public class TerrariumController {
     }
 
     @GetMapping("/all/")
-    public ArrayList<TerrariumDTO> getTerrariumsByUser(@RequestParam("email")String email) {
-        return terrariumService.getTerrariumsByEmail(email);
+    public ArrayList<TerrariumDTO> getTerrariumsByUser(@RequestHeader("Authorization")String authorizationHeader) {
+            String token = authorizationHeader.replace("Bearer ", "");
+            String email = JwtTokenUtil.getEmailFromToken(token);
+            return terrariumService.getTerrariumsByEmail(email);
     }
 
     @PostMapping("/create/")
-    public TerrariumDTO createTerrarium(@RequestBody TerrariumDTO terrarium, @RequestParam("email") String email){
+    public TerrariumDTO createTerrarium(@RequestBody TerrariumDTO terrarium, @RequestHeader("Authorization")String authorizationHeader){
+        String token = authorizationHeader.replace("Bearer ", "");
+        String email = JwtTokenUtil.getEmailFromToken(token);
         return terrariumService.createTerrarium(terrarium, email);
     }
 
     @PutMapping("/alter/")
-    public void alterTerrarium(@RequestBody TerrariumDTO terrarium, @RequestParam("email") String email){
+    public void alterTerrarium(@RequestBody TerrariumDTO terrarium, @RequestHeader("Authorization")String authorizationHeader){
+        String token = authorizationHeader.replace("Bearer ", "");
+        String email = JwtTokenUtil.getEmailFromToken(token);
         terrariumService.alterTerrarium(email,terrarium);
     }
 
     @DeleteMapping("/delete/")
-    public void deleteTerrarium(@RequestParam("email") String email, @RequestParam("terrariumId") Long terrariumId ){
+    public void deleteTerrarium(@RequestHeader("Authorization")String authorizationHeader, @RequestParam("terrariumId") Long terrariumId ){
+        String token = authorizationHeader.replace("Bearer ", "");
+        String email = JwtTokenUtil.getEmailFromToken(token);
         terrariumService.deleteTerrarium(email, terrariumId);
-
     }
 }

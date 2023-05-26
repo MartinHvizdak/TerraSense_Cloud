@@ -28,7 +28,7 @@ public class CustomerController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
             Customer customer=customerService.login(loginRequest);
-            String token = JwtTokenUtil.generateToken(customer.getUsername());
+            String token = JwtTokenUtil.generateToken(customer.getEmail());
 
             return ResponseEntity.ok(new LoginResponse(token));
         } catch (AuthenticationException e) {
@@ -46,7 +46,7 @@ public class CustomerController {
         customerService.register(newUser);
 
         try {
-            String token = JwtTokenUtil.generateToken(newUser.getUsername());
+            String token = JwtTokenUtil.generateToken(newUser.getEmail());
             System.out.println("3");
             return ResponseEntity.ok(new LoginResponse(token));
         } catch (AuthenticationException e) {

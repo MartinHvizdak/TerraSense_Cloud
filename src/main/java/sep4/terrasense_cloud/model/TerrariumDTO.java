@@ -15,12 +15,8 @@ public class TerrariumDTO {
     private double maxHumidity;
     private int minCO2;
     private int maxCO2;
-    private FeedingSchedule feedingSchedule;
-    private Set<Animal> animals;
-    private Set<Alert> alerts;
-    private Set<Reading> readings;
 
-    public TerrariumDTO(long id, String name, double minTemperature, double maxTemperature, double minHumidity, double maxHumidity, int minCO2, int maxCO2, FeedingSchedule feedingSchedule, Set<Animal> animals, Set<Alert> alerts, Set<Reading> readings) {
+    public TerrariumDTO(long id, String name, double minTemperature, double maxTemperature, double minHumidity, double maxHumidity, int minCO2, int maxCO2) {
         this.id = id;
         this.name = name;
         this.minTemperature = minTemperature;
@@ -29,10 +25,6 @@ public class TerrariumDTO {
         this.maxHumidity = maxHumidity;
         this.minCO2 = minCO2;
         this.maxCO2 = maxCO2;
-        this.feedingSchedule = feedingSchedule;
-        this.animals = animals;
-        this.alerts = alerts;
-        this.readings = readings;
     }
 
     public TerrariumDTO(Terrarium terrarium){
@@ -44,10 +36,6 @@ public class TerrariumDTO {
         this.maxHumidity = terrarium.getMaxHumidity();
         this.minCO2 = terrarium.getMinCO2();
         this.maxCO2 = terrarium.getMaxCO2();
-        this.feedingSchedule = terrarium.getFeedingSchedule();
-        this.animals = terrarium.getAnimals();
-        this.alerts = terrarium.getAlerts();
-        this.readings = terrarium.getReadings();
     }
 
     public long getId() {
@@ -80,21 +68,5 @@ public class TerrariumDTO {
 
     public int getMaxCO2() {
         return maxCO2;
-    }
-
-    public FeedingSchedule getFeedingSchedule() {
-        return feedingSchedule;
-    }
-
-    public Set<Animal> getAnimals() {
-        return animals;
-    }
-
-    public Set<Alert> getAlerts() {
-        return alerts;
-    }
-
-    public Set<Reading> getReadings() {
-        return readings;
     }
 }

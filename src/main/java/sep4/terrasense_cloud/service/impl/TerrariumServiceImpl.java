@@ -42,14 +42,19 @@ public class TerrariumServiceImpl implements TerrariumService {
 
     @Override
     public ArrayList<TerrariumDTO> getTerrariumsByEmail(String email) {
+        ArrayList<TerrariumDTO> terrariumDTOS = new ArrayList<>();
         try{
-            ArrayList<TerrariumDTO> terrariumDTOS = new ArrayList<>();
             Customer customer = customerRepository.getReferenceById(email);
+            System.out.println(customer);
             Set<Terrarium> terrariums = customer.getTerrariums();
-            terrariums.forEach((terrarium) -> terrariumDTOS.add(new TerrariumDTO(terrarium)));
+            System.out.println(terrariums.size());
+            for(Terrarium terrarium : terrariums){
+                terrariumDTOS.add(new TerrariumDTO(terrarium));
+            }
             return terrariumDTOS;
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getStackTrace());
+            return terrariumDTOS;
         }
     }
 
