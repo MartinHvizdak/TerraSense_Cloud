@@ -34,4 +34,67 @@ public class TerrariumDTO {
         this.alerts = alerts;
         this.readings = readings;
     }
+
+    public TerrariumDTO(Terrarium terrarium){
+        this.id = terrarium.getId();
+        this.name = terrarium.getName();
+        this.minTemperature = terrarium.getMinTemperature();
+        this.maxTemperature = terrarium.getMaxTemperature();
+        this.minHumidity = terrarium.getMinHumidity();
+        this.maxHumidity = terrarium.getMaxHumidity();
+        this.minCO2 = terrarium.getMinCO2();
+        this.maxCO2 = terrarium.getMaxCO2();
+        this.feedingSchedule = terrarium.getFeedingSchedule();
+        this.animals = terrarium.getAnimals();
+        this.alerts = terrarium.getAlerts();
+        this.readings = terrarium.getReadings();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getMinTemperature() {
+        return minTemperature;
+    }
+
+    public double getMaxTemperature() {
+        return maxTemperature;
+    }
+
+    public double getMinHumidity() {
+        return minHumidity;
+    }
+
+    public double getMaxHumidity() {
+        return maxHumidity;
+    }
+
+    public int getMinCO2() {
+        return minCO2;
+    }
+
+    public int getMaxCO2() {
+        return maxCO2;
+    }
+
+    public FeedingSchedule getFeedingSchedule() {
+        return feedingSchedule;
+    }
+
+    public Set<Animal> getAnimals() {
+        return animals;
+    }
+
+    public Set<Alert> getAlerts() {
+        return alerts;
+    }
+
+    public Set<Reading> getReadings() {
+        return readings;
+    }
 }

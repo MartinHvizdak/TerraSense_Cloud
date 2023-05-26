@@ -15,9 +15,9 @@ public interface TerrariumService {
   
     ArrayList<TerrariumDTO> getTerrariumsByEmail(String email);
 
-    Terrarium createTerrarium(Terrarium terrarium, String email);
+    TerrariumDTO createTerrarium(TerrariumDTO terrarium, String email);
 
-    void alterTerrarium(String email, Terrarium terrarium);
+    void alterTerrarium(String email, TerrariumDTO terrarium);
 
     void deleteTerrarium(String email, Long terrariumId);
 }
