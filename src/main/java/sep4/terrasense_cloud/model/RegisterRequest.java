@@ -34,4 +34,8 @@ public class RegisterRequest {
     public String getEmail() {
         return email;
     }
+
+    public void setEmail(String s) {
+        this.email=s;
+    }
 }
