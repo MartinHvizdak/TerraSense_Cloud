@@ -3,6 +3,7 @@ package sep4.terrasense_cloud.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 public class Animal {
@@ -30,14 +31,13 @@ public class Animal {
     public Animal() {
     }
 
-    public Animal(String name, String picture, String gender, String species, LocalDate dateOfBirth, int age, Terrarium terrarium) {
+    public Animal(String name, String picture, String gender, String species, LocalDate dateOfBirth) {
         this.name = name;
         this.picture = picture;
         this.gender = gender;
         this.species = species;
         this.dateOfBirth = dateOfBirth;
-        this.age = age;
-        this.terrarium = terrarium;
+        this.age = Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
 
     public long getId() {
