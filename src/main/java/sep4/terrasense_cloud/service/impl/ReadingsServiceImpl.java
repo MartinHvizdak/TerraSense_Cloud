@@ -3,6 +3,8 @@ package sep4.terrasense_cloud.service.impl;
 import org.springframework.stereotype.Service;
 import sep4.terrasense_cloud.database.repository.ReadingsRepository;
 import sep4.terrasense_cloud.model.Reading;
+import sep4.terrasense_cloud.model.ReadingDTO;
+import sep4.terrasense_cloud.service.services.AlertService;
 import sep4.terrasense_cloud.service.services.ReadingsService;
 
 import java.time.LocalDateTime;
@@ -12,21 +14,23 @@ import java.util.NoSuchElementException;
 public class ReadingsServiceImpl implements ReadingsService {
 
     ReadingsRepository readingsRepository;
+    AlertServiceImpl alertService;
 
-    public ReadingsServiceImpl(ReadingsRepository readingsRepository)
+    public ReadingsServiceImpl(ReadingsRepository readingsRepository, AlertServiceImpl alertService)
     {
         this.readingsRepository=readingsRepository;
+        this.alertService=alertService;
     }
 
 
-    public Reading getReadingById(Long id) {
+    public ReadingDTO getReadingById(Long id) {
         try {
-            return readingsRepository.findById(id).get();
+            return new ReadingDTO(readingsRepository.findById(id).get());
         }
         catch (NoSuchElementException e)
         {
             System.out.println(e.getStackTrace());
-            return new Reading(-1,-1,-1);
+            return null;
         }
     }
 
@@ -44,17 +48,18 @@ public class ReadingsServiceImpl implements ReadingsService {
     @Override
     public Reading addReading(Reading reading) {
         System.out.println(reading.getCO2()+" "+reading.getTemperature()+" "+reading.getHumidity());
+        alertService.checkAlertTrigger(reading);
         return readingsRepository.save(reading);
     }
 
     @Override
-    public ArrayList<Reading> getReadingsByTimestamps(LocalDateTime start, LocalDateTime end) {
+    public ArrayList<ReadingDTO> getReadingsByTimestamps(LocalDateTime start, LocalDateTime end) {
         ArrayList<Reading> readings = readingsRepository.findAllByOrderByTimestampDesc();
-        ArrayList<Reading> returnList = new ArrayList<>();
+        ArrayList<ReadingDTO> returnList = new ArrayList<>();
         for(Reading reading : readings){
             // start <= timestamp <= end
             if((!start.isAfter(reading.getTimestamp())) && !end.isBefore(reading.getTimestamp())){
-                returnList.add(reading);
+                returnList.add(new ReadingDTO(reading));
             }
         }
         return returnList;

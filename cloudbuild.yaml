@@ -1,13 +1,16 @@
 steps:
   - name: 'maven:3.8.2-openjdk-17'
     entrypoint: 'mvn'
-    args: [ 'clean', 'package', '-DskipTests' ]
+    args: [ 'clean', 'install', '-DskipTests' ]
+  - name: 'maven:3.8.2-openjdk-17'
+    entrypoint: 'mvn'
+    args: [ 'test' ]
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/terrasense/terrasense:v1.3', '.']
+    args: ['build', '-t', 'gcr.io/terrasense/terrasense:v1.11', '.']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/terrasense/terrasense:v1.3']
+    args: ['push', 'gcr.io/terrasense/terrasense:v1.11']
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy', '--image-url=gcr.io/terrasense/terrasense:v', '--version', 'v1-3']
+    args: ['app', 'deploy', '--image-url=gcr.io/terrasense/terrasense:v1.11', '--version', 'v1-11']
 options:
   logging: CLOUD_LOGGING_ONLY
 # append version number to the v, in app deploy use - instead of . (v1.1 = v1-1)
