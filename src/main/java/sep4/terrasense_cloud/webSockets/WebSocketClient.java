@@ -122,24 +122,24 @@ public class WebSocketClient implements WebSocket.Listener {
         try {
             Terrarium terrarium = terrariumRepository.getReferenceById(1L);
             if (reading.getCO2() > terrarium.getMaxCO2()) {
-                alertRepository.save(new Alert("CO2", LocalDate.now(), String.valueOf(reading.getCO2()), "high", terrarium));
+                alertRepository.save(new Alert("CO2", LocalDateTime.now(), String.valueOf(reading.getCO2()), "high", terrarium));
                 output = true;
             } else if (reading.getCO2() < terrarium.getMinCO2()) {
-                alertRepository.save(new Alert("CO2", LocalDate.now(), String.valueOf(reading.getCO2()), "high", terrarium));
+                alertRepository.save(new Alert("CO2", LocalDateTime.now(), String.valueOf(reading.getCO2()), "high", terrarium));
                 output = true;
             }
             if (reading.getHumidity() > terrarium.getMaxHumidity()) {
-                alertRepository.save(new Alert("Humidity", LocalDate.now(), String.valueOf(reading.getHumidity()), "high", terrarium));
+                alertRepository.save(new Alert("Humidity", LocalDateTime.now(), String.valueOf(reading.getHumidity()), "high", terrarium));
                 output = true;
             } else if (reading.getHumidity() < terrarium.getMinHumidity()) {
-                alertRepository.save(new Alert("Humidity", LocalDate.now(), String.valueOf(reading.getHumidity()), "high", terrarium));
+                alertRepository.save(new Alert("Humidity", LocalDateTime.now(), String.valueOf(reading.getHumidity()), "high", terrarium));
                 output = true;
             }
             if (reading.getTemperature() > terrarium.getMaxTemperature()) {
-                alertRepository.save(new Alert("Temperature", LocalDate.now(), String.valueOf(reading.getTemperature()), "high", terrarium));
+                alertRepository.save(new Alert("Temperature", LocalDateTime.now(), String.valueOf(reading.getTemperature()), "high", terrarium));
                 output = true;
             } else if (reading.getTemperature() < terrarium.getMaxTemperature()) {
-                alertRepository.save(new Alert("Temperature", LocalDate.now(), String.valueOf(reading.getTemperature()), "high", terrarium));
+                alertRepository.save(new Alert("Temperature", LocalDateTime.now(), String.valueOf(reading.getTemperature()), "high", terrarium));
                 output = true;
             }
         } catch (Exception e) {
