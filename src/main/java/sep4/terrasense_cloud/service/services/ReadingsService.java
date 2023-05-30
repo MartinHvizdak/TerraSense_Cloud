@@ -4,10 +4,8 @@ import org.springframework.stereotype.Service;
 import sep4.terrasense_cloud.model.Reading;
 import sep4.terrasense_cloud.model.ReadingDTO;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 @Service
 public interface ReadingsService {
