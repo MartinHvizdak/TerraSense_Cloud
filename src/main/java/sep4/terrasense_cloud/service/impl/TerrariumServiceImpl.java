@@ -11,7 +11,6 @@ import sep4.terrasense_cloud.service.services.TerrariumService;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.Set;
 
 @Service

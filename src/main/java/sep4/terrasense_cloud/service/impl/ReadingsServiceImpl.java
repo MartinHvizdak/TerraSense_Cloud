@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import sep4.terrasense_cloud.database.repository.ReadingsRepository;
 import sep4.terrasense_cloud.model.Reading;
 import sep4.terrasense_cloud.model.ReadingDTO;
-import sep4.terrasense_cloud.service.services.AlertService;
 import sep4.terrasense_cloud.service.services.ReadingsService;
 
 import java.time.LocalDateTime;

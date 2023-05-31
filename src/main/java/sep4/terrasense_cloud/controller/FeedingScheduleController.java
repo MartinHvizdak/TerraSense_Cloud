@@ -2,7 +2,6 @@ package sep4.terrasense_cloud.controller;
 
 import org.springframework.web.bind.annotation.*;
 import sep4.terrasense_cloud.model.FeedingSchedule;
-import sep4.terrasense_cloud.model.Terrarium;
 import sep4.terrasense_cloud.service.services.FeedingScheduleService;
 
 import java.time.LocalDate;

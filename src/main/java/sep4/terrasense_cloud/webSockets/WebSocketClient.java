@@ -3,12 +3,7 @@ package sep4.terrasense_cloud.webSockets;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.core.MessageSendingOperations;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.support.GenericMessage;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import sep4.terrasense_cloud.model.Alert;
 import sep4.terrasense_cloud.model.Reading;
@@ -152,7 +147,7 @@ public class WebSocketClient implements WebSocket.Listener {
         }
     }
     // Method to set the feeding schedule
-    public void setFeedingSchedule(LocalDate time, int amount, double frequency, Terrarium terrarium) {
+    public void setFeedingSchedule(LocalDateTime time, int amount, double frequency, Terrarium terrarium) {
         JSONObject json = new JSONObject();
         try {
             json.put("time", time.toString());

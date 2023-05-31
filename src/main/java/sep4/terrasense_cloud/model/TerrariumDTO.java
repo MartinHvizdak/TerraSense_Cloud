@@ -1,10 +1,5 @@
 package sep4.terrasense_cloud.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-
-import java.util.Set;
 
 public class TerrariumDTO {
     private long id;
