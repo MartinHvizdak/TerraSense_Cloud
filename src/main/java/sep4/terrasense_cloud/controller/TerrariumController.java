@@ -60,6 +60,8 @@ public class TerrariumController {
         terrarium.setMinTemperature(limits.getMinTemperature());
         terrarium.setMaxTemperature(limits.getMaxTemperature());
         terrariumService.addTerrarium(terrarium);
+
+        terrariumService.setLimits(limits);
         return terrarium;
     }
 

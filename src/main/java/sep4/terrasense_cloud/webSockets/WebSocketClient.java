@@ -28,6 +28,8 @@ public class WebSocketClient implements WebSocket.Listener {
     private ReadingsService readingsService;
     private JSONObject feedingSchedule = null;
 
+    private JSONObject limits = null;
+
     private TerrariumRepository terrariumRepository;
 
 
@@ -102,7 +104,14 @@ public class WebSocketClient implements WebSocket.Listener {
                     sendDownLink(String.valueOf(feedingSchedule));
                     feedingSchedule=null;
                 }
+
             }
+            else if (limits!=null)
+            {
+                sendDownLink(String.valueOf(limits));
+                limits=null;
+            }
+
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -158,6 +167,23 @@ public class WebSocketClient implements WebSocket.Listener {
             feedingSchedule = json; // Update the feeding schedule variable
         } catch (JSONException e) {
             throw new RuntimeException("Error creating JSON message for feeding schedule", e);
+        }
+    }
+
+    public void setLimit(int minCO2, int maxCO2, double minHumidity, double maxHumidity, double minTemperature, double maxTemperature)
+    {
+        JSONObject json= new JSONObject();
+        try {
+            json.put("CO2 bottom limit", minCO2);
+            json.put("CO2 top limit", maxCO2);
+            json.put("Humidity bottom limit", minHumidity);
+            json.put("Humidity top limit", maxHumidity);
+            json.put("Temperature bottom limit", minTemperature);
+            json.put("Temperature top limit", maxTemperature);
+
+            limits=json;
+        } catch (JSONException e) {
+            throw new RuntimeException("Error creating JSON message for limits", e);
         }
     }
 }

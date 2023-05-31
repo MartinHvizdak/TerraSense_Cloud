@@ -5,10 +5,13 @@ import org.springframework.transaction.annotation.Transactional;
 import sep4.terrasense_cloud.database.repository.CustomerRepository;
 import sep4.terrasense_cloud.database.repository.TerrariumRepository;
 import sep4.terrasense_cloud.model.Customer;
+import sep4.terrasense_cloud.model.LimitsDTO;
 import sep4.terrasense_cloud.model.Terrarium;
 import sep4.terrasense_cloud.model.TerrariumDTO;
 import sep4.terrasense_cloud.service.services.TerrariumService;
+import sep4.terrasense_cloud.webSockets.WebSocketClient;
 
+import javax.swing.undo.UndoManager;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -18,10 +21,12 @@ public class TerrariumServiceImpl implements TerrariumService {
 
     TerrariumRepository terrariumRepository;
     CustomerRepository customerRepository;
+    private WebSocketClient webSocketClient;
 
-    public TerrariumServiceImpl(TerrariumRepository terrariumRepository, CustomerRepository customerRepository) {
+    public TerrariumServiceImpl(WebSocketClient webSocketClient, TerrariumRepository terrariumRepository, CustomerRepository customerRepository) {
         this.terrariumRepository = terrariumRepository;
         this.customerRepository = customerRepository;
+        this.webSocketClient=webSocketClient;
     }
 
     @Override
@@ -117,4 +122,20 @@ public class TerrariumServiceImpl implements TerrariumService {
             throw new NoSuchElementException("Terrarium doesn't exist");
         }
     }
+
+
+
+    public void setLimits(LimitsDTO request) {
+        int minCO2 = request.getMinCO2();
+        int maxCO2 = request.getMaxCO2();
+        double minHumidity = request.getMinHumidity();
+        double maxHumidity = request.getMaxHumidity();
+        double minTemperature = request.getMinTemperature();
+        double maxTemperature = request.getMaxTemperature();
+
+        // Call the WebSocketClient method to send the feeding schedule to the IoT device
+
+        webSocketClient.setLimit(minCO2, maxCO2, minHumidity,maxHumidity,minTemperature,maxTemperature);
+    }
 }
+

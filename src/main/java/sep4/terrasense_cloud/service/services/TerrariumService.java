@@ -1,6 +1,7 @@
 package sep4.terrasense_cloud.service.services;
 
 import org.springframework.stereotype.Service;
+import sep4.terrasense_cloud.model.LimitsDTO;
 import sep4.terrasense_cloud.model.Terrarium;
 import sep4.terrasense_cloud.model.TerrariumDTO;
 
@@ -18,4 +19,6 @@ public interface TerrariumService {
     void alterTerrarium(String email, TerrariumDTO terrarium);
 
     void deleteTerrarium(String email, Long terrariumId);
+
+    void setLimits(LimitsDTO request);
 }
