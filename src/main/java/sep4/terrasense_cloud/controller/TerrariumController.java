@@ -21,13 +21,14 @@ public class TerrariumController {
     }
 
     @PostMapping("/temperature")
-    public Terrarium setTemperature(@RequestParam("min") double min,
+    public void setTemperature(@RequestParam("min") double min,
                                     @RequestParam("max") double max){
-        terrarium = terrariumService.getTerrariumById(1L);
+        /*terrarium = terrariumService.getTerrariumById(1L);
         terrarium.setMinTemperature(min);
         terrarium.setMaxTemperature(max);
-        terrariumService.addTerrarium(terrarium);
-        return terrarium;
+        terrariumService.addTerrarium(terrarium);*/
+        terrariumService.setTempLimits(min,max);
+       // return terrarium;
     }
 
     @PostMapping("/humidity")

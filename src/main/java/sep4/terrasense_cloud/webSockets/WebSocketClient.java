@@ -1,5 +1,7 @@
 package sep4.terrasense_cloud.webSockets;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,28 +28,27 @@ import java.util.concurrent.CompletableFuture;
 public class WebSocketClient implements WebSocket.Listener {
     private WebSocket server = null;
     private ReadingsService readingsService;
-    private JSONObject feedingSchedule = null;
-
-    private JSONObject limits = null;
 
     private TerrariumRepository terrariumRepository;
 
-
+    private final ObjectMapper objectMapper;
     private AlertRepository alertRepository;
 
     // Send down-link message to device
     // Must be in JSON format according to https://github.com/ihavn/IoT_Semester_project/blob/master/LORA_NETWORK_SERVER.md
     public void sendDownLink(String jsonTelegram) {
+        System.out.println(jsonTelegram);
         server.sendText(jsonTelegram, true);
     }
 
     // E.g. url: "wss://iotnet.teracom.dk/app?token=??????????????????????????????????????????????="
     // Substitute ????????????????? with the token you have been given
     @Autowired
-    public WebSocketClient(ReadingsService readingsService, AlertRepository alertRepository, TerrariumRepository terrariumRepository) {
+    public WebSocketClient(ObjectMapper objectMapper,ReadingsService readingsService, AlertRepository alertRepository, TerrariumRepository terrariumRepository) {
         this.readingsService = readingsService;
         this.alertRepository=alertRepository;
         this.terrariumRepository=terrariumRepository;
+        this.objectMapper=objectMapper;
         HttpClient client = HttpClient.newHttpClient();
         CompletableFuture<WebSocket> ws = client.newWebSocketBuilder()
                 .buildAsync(URI.create("wss://iotnet.teracom.dk/app?token=vnoUhAAAABFpb3RuZXQudGVyYWNvbS5ka2v2Q_l1Fej_TK0VFKubjJQ="), this);
@@ -94,23 +95,11 @@ public class WebSocketClient implements WebSocket.Listener {
 
     // onText()
     public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
+
         String indented = null;
         try {
             indented = (new JSONObject(data.toString())).toString(4);
             readingsService.addReading(Telegram.getValues(new JSONObject(data.toString())));
-            // Check if the received feeding schedule matches the stored feeding schedule
-            if (feedingSchedule != null) {
-                {
-                    sendDownLink(String.valueOf(feedingSchedule));
-                    feedingSchedule=null;
-                }
-
-            }
-            else if (limits!=null)
-            {
-                sendDownLink(String.valueOf(limits));
-                limits=null;
-            }
 
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -157,33 +146,30 @@ public class WebSocketClient implements WebSocket.Listener {
     }
     // Method to set the feeding schedule
     public void setFeedingSchedule(LocalDateTime time, int amount, double frequency, Terrarium terrarium) {
-        JSONObject json = new JSONObject();
-        try {
-            json.put("time", time.toString());
-            json.put("amount", amount);
-            json.put("frequency", frequency);
-            json.put("terrariumId", terrarium.getId());
-
-            feedingSchedule = json; // Update the feeding schedule variable
-        } catch (JSONException e) {
-            throw new RuntimeException("Error creating JSON message for feeding schedule", e);
-        }
+        /* Telegram downlink=new Telegram("0004A30B00E7FC50",3,false,);
+        sendDownLink(downlink.toString());*/
     }
 
     public void setLimit(int minCO2, int maxCO2, double minHumidity, double maxHumidity, double minTemperature, double maxTemperature)
     {
-        JSONObject json= new JSONObject();
-        try {
-            json.put("CO2 bottom limit", minCO2);
-            json.put("CO2 top limit", maxCO2);
-            json.put("Humidity bottom limit", minHumidity);
-            json.put("Humidity top limit", maxHumidity);
-            json.put("Temperature bottom limit", minTemperature);
-            json.put("Temperature top limit", maxTemperature);
-
-            limits=json;
-        } catch (JSONException e) {
-            throw new RuntimeException("Error creating JSON message for limits", e);
+       /* Telegram downlink=new Telegram("0004A30B00E7FC50",2,false,);
+        sendDownLink(downlink.toString());*/
+    }
+    public void setTempLimits(double min, double max) throws JsonProcessingException {
+        Telegram downlink=new Telegram("0004A30B00E7FC50",1,true,decimalToHex(min)+decimalToHex(max));
+        System.out.println("new DownLink: "+downlink.toString());
+        sendDownLink(downlink.getJson());
+    }
+    public String decimalToHex(double num)
+    {
+        num=num*10;
+        String integerHex = Integer.toHexString((int) num);
+        if(integerHex.length()==3)
+        {
+            integerHex="0"+integerHex;
+        } else if (integerHex.length()==2) {
+            integerHex="00"+integerHex;
         }
+        return integerHex;
     }
 }

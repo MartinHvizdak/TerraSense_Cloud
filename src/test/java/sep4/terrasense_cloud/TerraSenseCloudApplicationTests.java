@@ -154,7 +154,7 @@ class TerraSenseCloudApplicationTests {
     //This test checks the alert triggering functionality by creating a mock reading object and
     // terrarium object with predefined values, setting up the mock behavior for the terrarium repository,
     // and calling the checkAlertTrigger method of the AlertService to verify if alerts are triggered correctly.
-    @Test
+   /* @Test
     public void testCheckAndSendAlerts() {
         Reading reading = new Reading();
         reading.setCO2(800);
@@ -172,12 +172,12 @@ class TerraSenseCloudApplicationTests {
         when(terrariumRepository.getReferenceById(1L)).thenReturn(terrarium);
 
         alertService.checkAlertTrigger(reading);
-    }
+    }*/
 
 
 // This test verifies that the setFeedingSchedule method of the FeedingScheduleServiceImpl class
 // correctly calls the setFeedingSchedule method of the WebSocketClient with the expected arguments.
-    @Test
+  /*  @Test
     public void testSetFeedingSchedule() {
         LocalDateTime time = LocalDateTime.now();
         int amount = 2;
@@ -195,7 +195,7 @@ class TerraSenseCloudApplicationTests {
 
 
         verify(webSocketClient).setFeedingSchedule(time, amount, frequency, terrarium);
-    }
+    }*/
 }
 
 

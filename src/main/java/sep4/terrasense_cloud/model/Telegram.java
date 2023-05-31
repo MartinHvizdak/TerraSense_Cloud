@@ -1,15 +1,69 @@
 package sep4.terrasense_cloud.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.catalina.authenticator.Constants;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Telegram {
 
 
-    public Telegram() {
+    private String cmd;
+    @JsonProperty("EUI")
+    private String EUI;
+    private int port;
+    private boolean confirmed;
+    private String data;
+
+    public Telegram(String eui, int port, boolean confirmed, String data) {
+        this.cmd = "tx";
+        this.EUI = eui;
+        this.port = port;
+        this.confirmed = confirmed;
+        this.data = data;
     }
 
+    public String getCmd() {
+        return cmd;
+    }
 
+    public String getEUI() {
+        return EUI;
+    }
+
+    public void setEUI(String EUI) {
+        this.EUI = EUI;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public String getJson()
+
+    {
+        return "{" + "\"cmd\"=\"" + cmd + '\"' + ", \"EUI\"=\"" + EUI + '\"' + ", \"port\"=" + port
+                + ", \"confirmed\"=" + confirmed + ", \"data\"=\"" + data + '\"' + '}';
+    }
+    @Override
+    public String toString() {
+        return "{" +
+                "cmd='" + cmd + '\'' +
+                ", EUI='" + EUI + '\'' +
+                ", port=" + port +
+                ", confirmed=" + confirmed +
+                ", data='" + data + '\'' +
+                '}';
+    }
     public static Reading getValues(JSONObject payload){
 
         try {

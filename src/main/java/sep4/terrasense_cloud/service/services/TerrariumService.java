@@ -21,4 +21,8 @@ public interface TerrariumService {
     void deleteTerrarium(String email, Long terrariumId);
 
     void setLimits(LimitsDTO request);
+
+    void setTempLimits(double min, double max);
+
+
 }

@@ -1,5 +1,6 @@
 package sep4.terrasense_cloud.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sep4.terrasense_cloud.database.repository.CustomerRepository;
@@ -136,6 +137,14 @@ public class TerrariumServiceImpl implements TerrariumService {
         // Call the WebSocketClient method to send the feeding schedule to the IoT device
 
         webSocketClient.setLimit(minCO2, maxCO2, minHumidity,maxHumidity,minTemperature,maxTemperature);
+    }
+    public void setTempLimits(double min, double max)
+    {
+        try {
+            webSocketClient.setTempLimits(min,max);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
